@@ -29,7 +29,7 @@ const App = ({ signOut }) => {
 	const apiData = await API.graphql({ query: listNotes });
 	const notesFromAPI = apiData.data.listNotes.items;
 	await Promise.all(
-	    notesFromApi.map(async (note) => {
+	    notesFromAPI.map(async (note) => {
 		if (note.image) {
 		    const url = await Storage.get(note.name);
 		    note.image = url;
@@ -58,7 +58,7 @@ const App = ({ signOut }) => {
 	event.target.reset();
     }
 
-    async function deleteNote({ id }) {
+    async function deleteNote({ id, name }) {
 	const newNotes = notes.filter((note) => note.id !== id);
 	setNotes(newNotes);
 	await Storage.remove(name);
@@ -121,6 +121,7 @@ const App = ({ signOut }) => {
 				alt={`visual aid for ${notes.name}`}
 				style={{ width: 400 }}
 			    />
+			)}
 			<Button variation="link"
 				onClick={()=>deleteNote(note)}>
 			    Delete note
